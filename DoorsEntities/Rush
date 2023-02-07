@@ -59,7 +59,7 @@ entityTable.Debug.OnEntitySpawned = function()
 end
 
 entityTable.Debug.OnEntityDespawned = function()
-    print("Entity has despawned:", entityTable)
+    workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value]:WaitForChild("Door").ClientOpen:FireServer()
 end
 
 entityTable.Debug.OnEntityStartMoving = function()
