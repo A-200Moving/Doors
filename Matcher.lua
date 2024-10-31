@@ -40,7 +40,9 @@ local function IsSeeingPlayer(char)
 		params.FilterDescendantsInstances = {localChar, model}
 
 		local result = workspace:Raycast(origin, charOrigin - origin, params)
-		return false
+		if result then
+		    return false
+		end
 	end
 	return true
 end
