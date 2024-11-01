@@ -3,6 +3,8 @@ local ReSt = game:GetService("ReplicatedStorage")
 local TS = game:GetService("TweenService")
 local RS = game:GetService("RunService")
 
+local can = true
+
 local Spawned = Instance.new("BoolValue")
 Spawned.Name = "Rebound"
 Spawned.Value = true
@@ -124,19 +126,19 @@ wait(2.5)
 	spawn(function()
    local loop
    loop = game:GetService("RunService").RenderStepped:connect(function()
-      if Matcher and Matcher.Parent then
+      if Model and Model.Parent then
          local player = game:GetService("Players").LocalPlayer
       local char = player.Character
       if char then
          local hum = char:FindFirstChild("Humanoid")
          local root = char:FindFirstChild("HumanoidRootPart")
-local origin = Matcher.Position
+local origin = Main.Position
 	local charOrigin = root.Position
 
 	if (charOrigin - origin).Magnitude <= 35 then
 		local params = RaycastParams.new()
 		params.FilterType = Enum.RaycastFilterType.Blacklist
-		params.FilterDescendantsInstances = {char, Matcher}
+		params.FilterDescendantsInstances = {char, Main}
 
 		local result = workspace:Raycast(origin, charOrigin - origin, params)
 		if not result then
@@ -218,19 +220,19 @@ wait(2.5)
 spawn(function()
    local loop
    loop = game:GetService("RunService").RenderStepped:connect(function()
-      if Matcher and Matcher.Parent then
+      if Model and Model.Parent then
          local player = game:GetService("Players").LocalPlayer
       local char = player.Character
       if char then
          local hum = char:FindFirstChild("Humanoid")
          local root = char:FindFirstChild("HumanoidRootPart")
-local origin = Matcher.Position
+local origin = Main.Position
 	local charOrigin = root.Position
 
 	if (charOrigin - origin).Magnitude <= 35 then
 		local params = RaycastParams.new()
 		params.FilterType = Enum.RaycastFilterType.Blacklist
-		params.FilterDescendantsInstances = {char, Matcher}
+		params.FilterDescendantsInstances = {char, Main}
 
 		local result = workspace:Raycast(origin, charOrigin - origin, params)
 		if not result then
@@ -264,7 +266,11 @@ wait(1)
 Model:Destroy()
 end	
 
-local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/refs/heads/main/Doors/Custom%20Achievements/Source.lua"))()
+
+Spawned:Destroy()
+
+if can then
+	local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/refs/heads/main/Doors/Custom%20Achievements/Source.lua"))()
 
 local function LoadImage(imageSource, imageName)
 -- if the imageSource is a GitHub URL (e.g., it starts with "https://")
@@ -276,11 +282,10 @@ local function LoadImage(imageSource, imageName)
     
 end
 
-Spawned:Destroy()
-
 achievementGiver({
     Title = "No Respawn",
     Desc = "Please Stop Coming Back.",
     Reason = "Survive Rebound.",
     Image = LoadImage("https://github.com/A-200Moving/Doors/blob/main/No_respawn.png?raw=true","Rebound")
 })
+end
