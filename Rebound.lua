@@ -73,9 +73,9 @@ function GetGitSound(GithubSnd,SoundName)
 	sound.SoundId=(getcustomasset or getsynasset)(SoundName..".mp3")
 	return sound
 end
-local function Move(target)
-   local dist = (Main.Position - target).Magnitude
-   local tween = TS:Create(Main, TweenInfo.new(dist / 80), {Position = target})
+local function Move(target, part)
+   local dist = (part.Position - target).Magnitude
+   local tween = TS:Create(part, TweenInfo.new(dist / 80), {Position = target})
    tween:Play()
    tween.Completed:Wait()
 end
@@ -110,12 +110,12 @@ for i=#Rooms, 1, -1 do
    local room = Rooms[i]
    if room and room.Parent then
        if room:FindFirstChild("RoomExit") then
-           Move(room.RoomExit.Position)
+           Move(room.RoomExit.Position, Main)
        end
    end
    if room and room.Parent then
        if room:FindFirstChild("RoomEntrance") then
-           Move(room.RoomEntrance.Position)
+           Move(room.RoomEntrance.Position, Main)
        end
    end
 end
@@ -123,7 +123,9 @@ TS:Create(move, TweenInfo.new(1), {Volume = 0}):Play()
 wait(1)
 Model:Destroy()
 
-local function Rebound()
+for i=1, math.random(3,5) do
+   RoomsFolder.ChildAdded:Wait()
+wait(2)
    local Model = game:GetObjects("rbxassetid://12847597717")[1]
 Model.Parent = workspace
 local Main = Model.RushNew
@@ -171,21 +173,16 @@ for i=#Rooms, 1, -1 do
    local room = Rooms[i]
    if room and room.Parent then
        if room:FindFirstChild("RoomExit") then
-           Move(room.RoomExit.Position)
+           Move(room.RoomExit.Position, Main)
        end
    end
    if room and room.Parent then
        if room:FindFirstChild("RoomEntrance") then
-           Move(room.RoomEntrance.Position)
+           Move(room.RoomEntrance.Position, Main)
        end
    end
 end
 TS:Create(move, TweenInfo.new(1), {Volume = 0}):Play()
 wait(1)
 Model:Destroy()
-end
-for i=1, math.random(3,5) do
-   ReSt.GameData.LatestRoom.Changed:Wait()
-wait(1)
-   Rebound()
 end
