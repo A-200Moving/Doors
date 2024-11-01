@@ -13,22 +13,34 @@ local moduleScripts = {
     Achievements = require(ReplicatedStorage.Achievements)
 }
 
-local function GetGitHubImage(GitHubUrl, imageName)
-    local url = GitHubUrl
-    if not isfile(imageName..".png") then
-        writefile(imageName..".png", game:HttpGet(url))
+-- Initialize services
+
+local function LoadImage(imageSource, imageName)
+-- if the imageSource is a GitHub URL (e.g., it starts with "https://")
+    if string.sub(imageSource, 1, 8) == "https://" then
+        -- Handle GitHub image
+        local url = imageSource
+        if not isfile(imageName..".png") then
+            writefile(imageName..".png", game:HttpGet(url))
+        end
+        return (getcustomasset or getsynasset)(imageName..".png")
+    else
+        -- Handle Roblox asset ID
+        return "rbxassetid://" .. imageSource
     end
-    return (getcustomasset or getsynasset)(imageName..".png")
+    return false
 end
 
+-- Example usage
 local defaultAchievement = {
     Title = "Title",
     Desc = "Description",
     Reason = "Reason",
-    Image = GetGitHubImage("","idk")
+    -- You can put a GitHub URL or a Roblox asset ID here
+    Image = "rbxassetid://12345678"  -- Or use a Roblox ID like "12309073114"
 }
 
--- Main
+-- Main function to set up achievement data
 return function(info)
     info = (type(info) == "table") and info or {}
     for i, v in defaultAchievement do
@@ -36,9 +48,13 @@ return function(info)
             info[i] = v
         end
     end
+
+    -- Call LoadImage function with the image source from info
+    LoadImage(info.Image, "AchievementImage")
     local stuff = moduleScripts.Achievements.SpecialQATester
     local old = stuff.GetInfo
     stuff.GetInfo = newcclosure(function() return info end)
     moduleScripts.AchievementUnlock(nil, stuff.Name)
     stuff.GetInfo = old
 end
+
