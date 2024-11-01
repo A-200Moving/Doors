@@ -144,5 +144,21 @@ entity:Destroy()
 Spawned:Destroy()
 
 if can then
+local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/refs/heads/main/Doors/Custom%20Achievements/Source.lua"))()
 
+local function LoadImage(imageSource, imageName)
+-- if the imageSource is a GitHub URL (e.g., it starts with "https://")
+    local url = imageSource
+        if not isfile(imageName..".png") then
+            writefile(imageName..".png", game:HttpGet(url))
+        end
+        return (getcustomasset or getsynasset)(imageName..".png")
+end
+
+achievementGiver({
+    Title = "A LightSpeed Thing",
+    Desc = "Remember Me?",
+    Reason = "Survive A-60.",
+    Image = LoadImage("https://github.com/A-200Moving/Doors/blob/main/Fair_matcher.png?raw=true","a60realfr")
+})
 end
