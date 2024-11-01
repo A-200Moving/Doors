@@ -4,7 +4,17 @@ local TS = game:GetService("TweenService")
 local RS = game:GetService("RunService")
 
 local RoomsFolder = workspace:WaitForChild("CurrentRooms")
-
+local Reboundcolor = Instance.new("ColorCorrectionEffect",game.Lighting) 
+game.Debris:AddItem(Reboundcolor,24)
+				Reboundcolor.Name = "Warn"
+				Reboundcolor.TintColor = Color3.fromRGB(65, 138, 255) Reboundcolor.Saturation = -0.7 Reboundcolor.Contrast = 0.2
+				local tw2 = TS:Create(Reboundcolor,TweenInfo.new(15),{TintColor = Color3.fromRGB(255, 255, 255),Saturation = 0, Contrast = 0})
+local TW = TS:Create(game.Lighting.MainColorCorrection, TweenInfo.new(5),{TintColor = Color3.fromRGB(255, 255, 255)})
+TW:Play()
+tw2:Play()
+tw2.Completed:Connect(function()
+	Reboundcolor:Destroy()
+end
 local Rooms = {}
 for _,v in pairs(RoomsFolder:GetChildren()) do
    table.insert(Rooms, v)
