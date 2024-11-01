@@ -1,6 +1,10 @@
 local ReSt = game:GetService("ReplicatedStorage")
 local TS = game:GetService("TweenService")
 
+local can = true
+
+local Module_Events = require(ReSt.ClientModules.Module_Events)
+
 local Matcher = game:GetObjects("rbxassetid://12445945135")[1]
 local Entity = Instance.new("Model")
 Entity.Name = "Matcher"
@@ -23,28 +27,15 @@ workspace.CurrentRooms.ChildAdded:Connect(function(v)
    table.insert(Rooms, v)
 end)
 
+for _,v in pairs(Rooms) do
+   Module_Events.flicker(v, 2)
+end
+
 local function Move(target)
    local dist = (Matcher.Position - target).Magnitude
    local tween = TS:Create(Matcher, TweenInfo.new(dist / 60), {Position = target})
    tween:Play()
    tween.Completed:Wait()
-end
-
-local function IsSeeingPlayer(char)
-   local origin = Entity:GetPivot().Position
-	local charOrigin = char:GetPivot().Position
-
-	if (charOrigin - origin).Magnitude <= 30 then
-		local params = RaycastParams.new()
-		params.FilterType = Enum.RaycastFilterType.Blacklist
-		params.FilterDescendantsInstances = {localChar, Matcher}
-
-		local result = workspace:Raycast(origin, charOrigin - origin, params)
-		if result then
-		    return true
-		end
-	end
-	return false
 end
 
 spawn(function()
@@ -56,11 +47,22 @@ spawn(function()
       if char then
          local hum = char:FindFirstChild("Humanoid")
          local root = char:FindFirstChild("HumanoidRootPart")
-         if not IsSeeingPlayer(char) then
-            hum:TakeDamage(100)
+local origin = Matcher.Position
+	local charOrigin = root.Position
+
+	if (charOrigin - origin).Magnitude <= 30 then
+		local params = RaycastParams.new()
+		params.FilterType = Enum.RaycastFilterType.Blacklist
+		params.FilterDescendantsInstances = {char, Matcher}
+
+		local result = workspace:Raycast(origin, charOrigin - origin, params)
+		if not result then
+        can = false
+		    hum:TakeDamage(100)
             ReSt:WaitForChild("GameStats")["Player_".. player.Name].Total.DeathCause.Value = "Matcher"
             loop:Disconnect()
-         end
+		end
+	end
          end
       else
          loop:Disconnect()
@@ -88,7 +90,8 @@ TS:Create(Matcher.Matcher, TweenInfo.new(1.5), {Volume = 0}):Play()
 wait(1.5)
 Entity:Destroy()
 
-local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Achievements/Source.lua"))()
+if can then
+   local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Achievements/Source.lua"))()
 
 achievementGiver({
     Title = "Fair Match",
@@ -96,3 +99,4 @@ achievementGiver({
     Reason = "Survive Matcher.",
     Image = "rbxassetid://12309073114"
 })
+end
