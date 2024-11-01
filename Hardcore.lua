@@ -19,4 +19,12 @@ spawn(function()
       game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
       loadstring(game:HttpGet("https://raw.githubusercontent.com/A-200Moving/Doors/refs/heads/main/Matcher.lua"))()
     end
-end
+end)
+
+spawn(function()
+    while wait(math.random(70,140)) do
+      game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+      wait(math.random(2,4))
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/A-200Moving/Doors/refs/heads/main/Rebound.lua"))()
+    end
+  end)
