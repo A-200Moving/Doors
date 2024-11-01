@@ -12,6 +12,7 @@ Entity.Parent = workspace
 Matcher.Parent = Entity
 Matcher.Name = "Main"
 Matcher.Matcher.PlaybackSpeed = 0.97
+Matcher.Matcher.RollOffMaxDistance = 300
 Matcher.Size = Vector3.new(5,5,5)
 Entity.PrimaryPart = Matcher
 
