@@ -36,15 +36,15 @@ local function IsSeeingPlayer(char)
 
 	if (charOrigin - origin).Magnitude <= 30 then
 		local params = RaycastParams.new()
-		params.FilterType = Enum.RaycastFilterType.Exclude
-		params.FilterDescendantsInstances = {localChar, model}
+		params.FilterType = Enum.RaycastFilterType.Blacklist
+		params.FilterDescendantsInstances = {localChar, Matcher}
 
 		local result = workspace:Raycast(origin, charOrigin - origin, params)
 		if result then
-		    return false
+		    return true
 		end
 	end
-	return true
+	return false
 end
 
 spawn(function()
@@ -56,7 +56,7 @@ spawn(function()
       if char then
          local hum = char:FindFirstChild("Humanoid")
          local root = char:FindFirstChild("HumanoidRootPart")
-         if IsSeeingPlayer(char) then
+         if not IsSeeingPlayer(char) then
             hum:TakeDamage(100)
             ReSt:WaitForChild("GameStats")["Player_".. player.Name].Total.DeathCause.Value = "Matcher"
             loop:Disconnect()
