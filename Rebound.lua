@@ -92,7 +92,7 @@ function GetGitSound(GithubSnd,SoundName)
 end
 local function Move(target, part)
    local dist = (part.Position - target).Magnitude
-   local tween = TS:Create(part, TweenInfo.new(dist / 40), {Position = target})
+   local tween = TS:Create(part, TweenInfo.new(dist / 60), {Position = target})
    tween:Play()
    tween.Completed:Wait()
 end
