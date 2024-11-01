@@ -39,7 +39,7 @@ end
 
 local function Move(target)
    local dist = (Matcher.Position - target).Magnitude
-   local tween = TS:Create(Matcher, TweenInfo.new(dist / 60, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {Position = target})
+   local tween = TS:Create(Matcher, TweenInfo.new(dist / 40, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {Position = target})
    tween:Play()
    tween.Completed:Wait()
 end
