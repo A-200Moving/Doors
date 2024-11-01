@@ -135,17 +135,19 @@ wait(2.5)
 local origin = Main.Position
 	local charOrigin = root.Position
 
-	if (charOrigin - origin).Magnitude <= 35 then
+	if (charOrigin - origin).Magnitude <= 40 then
 		local params = RaycastParams.new()
 		params.FilterType = Enum.RaycastFilterType.Blacklist
 		params.FilterDescendantsInstances = {char, Main}
 
 		local result = workspace:Raycast(origin, charOrigin - origin, params)
 		if not result then
-        can = false
+		        if not char:GetAttribute("Hiding") then
+			        can = false
 		    hum:TakeDamage(100)
             ReSt:WaitForChild("GameStats")["Player_".. player.Name].Total.DeathCause.Value = "Rebound"
-            loop:Disconnect()
+            loop:Disconnect()	
+			end
 		end
 	end
          end
