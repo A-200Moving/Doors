@@ -2,6 +2,16 @@ if game.ReplicatedStorage.GameData.LatestRoom.Value ~= 0 then
   game.Players.LocalPlayer:Kick("Please Execute Script Before Open Door!")
 end
 
+if workspace:FindFirstChild("HardcoreModeIsRun") then
+  warn("Script Is Already Run")
+  return
+end
+
+local IsRun = Instance.new("BoolValue")
+IsRun.Name = "HardcoreModeIsRun"
+IsRun.Value = true
+IsRun.Parent = workspace
+
 game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
 
 spawn(function()
