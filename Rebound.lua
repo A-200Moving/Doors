@@ -3,6 +3,11 @@ local ReSt = game:GetService("ReplicatedStorage")
 local TS = game:GetService("TweenService")
 local RS = game:GetService("RunService")
 
+local Spawned = Instance.new("BoolValue")
+Spawned.Name = "Rebound"
+Spawned.Value = true
+Spawned.Parent = workspace
+
 local RoomsFolder = workspace:WaitForChild("CurrentRooms")
 local Reboundcolor = Instance.new("ColorCorrectionEffect",game.Lighting) 
 game.Debris:AddItem(Reboundcolor,24)
@@ -14,7 +19,7 @@ TW:Play()
 tw2:Play()
 tw2.Completed:Connect(function()
 	Reboundcolor:Destroy()
-end
+end)
 local Rooms = {}
 for _,v in pairs(RoomsFolder:GetChildren()) do
    table.insert(Rooms, v)
@@ -270,6 +275,8 @@ local function LoadImage(imageSource, imageName)
         return (getcustomasset or getsynasset)(imageName..".png")
     
 end
+
+Spawned:Destroy()
 
 achievementGiver({
     Title = "No Respawn",
