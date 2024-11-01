@@ -47,7 +47,7 @@ end
 spawn(function()
    local loop
    loop = game:GetService("RunService").RenderStepped:connect(function()
-      if Matcher and Matcher then
+      if Matcher and Matcher.Parent then
          local player = game:GetService("Players").LocalPlayer
       local char = player.Character
       if char then
@@ -65,7 +65,7 @@ local origin = Matcher.Position
 		if not result then
         can = false
 		    hum:TakeDamage(100)
-            ReSt:WaitForChild("GameStats")["Player_".. player.Name].Total.DeathCause.Value = "Rebound"
+            ReSt:WaitForChild("GameStats")["Player_".. player.Name].Total.DeathCause.Value = "Matcher"
             loop:Disconnect()
 		end
 	end
@@ -108,13 +108,12 @@ local function LoadImage(imageSource, imageName)
             writefile(imageName..".png", game:HttpGet(url))
         end
         return (getcustomasset or getsynasset)(imageName..".png")
-    
 end
 
 achievementGiver({
     Title = "Fair Match",
     Desc = "Please Go Away.",
     Reason = "Survive Matcher.",
-    Image = LoadImage("https://github.com/A-200Moving/Doors/blob/main/Fair_matcher.png","Matcher")
+    Image = LoadImage("https://github.com/A-200Moving/Doors/blob/main/Fair_matcher.png?raw=true","matcherrrr")
 })
 end
