@@ -47,7 +47,7 @@ end
 spawn(function()
    local loop
    loop = game:GetService("RunService").RenderStepped:connect(function()
-      if Matcher and Matcher.Parent then
+      if Matcher and Matcher then
          local player = game:GetService("Players").LocalPlayer
       local char = player.Character
       if char then
@@ -56,7 +56,7 @@ spawn(function()
 local origin = Matcher.Position
 	local charOrigin = root.Position
 
-	if (charOrigin - origin).Magnitude <= 30 then
+	if (charOrigin - origin).Magnitude <= 35 then
 		local params = RaycastParams.new()
 		params.FilterType = Enum.RaycastFilterType.Blacklist
 		params.FilterDescendantsInstances = {char, Matcher}
@@ -65,7 +65,7 @@ local origin = Matcher.Position
 		if not result then
         can = false
 		    hum:TakeDamage(100)
-            ReSt:WaitForChild("GameStats")["Player_".. player.Name].Total.DeathCause.Value = "Matcher"
+            ReSt:WaitForChild("GameStats")["Player_".. player.Name].Total.DeathCause.Value = "Rebound"
             loop:Disconnect()
 		end
 	end
