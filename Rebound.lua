@@ -116,6 +116,37 @@ local distort = Instance.new("DistortionSoundEffect")
     eq.Parent = move
     move:Play()
 wait(2.5)
+	spawn(function()
+   local loop
+   loop = game:GetService("RunService").RenderStepped:connect(function()
+      if Matcher and Matcher.Parent then
+         local player = game:GetService("Players").LocalPlayer
+      local char = player.Character
+      if char then
+         local hum = char:FindFirstChild("Humanoid")
+         local root = char:FindFirstChild("HumanoidRootPart")
+local origin = Matcher.Position
+	local charOrigin = root.Position
+
+	if (charOrigin - origin).Magnitude <= 35 then
+		local params = RaycastParams.new()
+		params.FilterType = Enum.RaycastFilterType.Blacklist
+		params.FilterDescendantsInstances = {char, Matcher}
+
+		local result = workspace:Raycast(origin, charOrigin - origin, params)
+		if not result then
+        can = false
+		    hum:TakeDamage(100)
+            ReSt:WaitForChild("GameStats")["Player_".. player.Name].Total.DeathCause.Value = "Rebound"
+            loop:Disconnect()
+		end
+	end
+         end
+      else
+         loop:Disconnect()
+      end
+   end)
+end)
 for i=#Rooms, 1, -1 do
    local room = Rooms[i]
    if room and room.Parent then
@@ -179,6 +210,37 @@ local distort = Instance.new("DistortionSoundEffect")
     eq.Parent = move
     move:Play()
 wait(2.5)
+spawn(function()
+   local loop
+   loop = game:GetService("RunService").RenderStepped:connect(function()
+      if Matcher and Matcher.Parent then
+         local player = game:GetService("Players").LocalPlayer
+      local char = player.Character
+      if char then
+         local hum = char:FindFirstChild("Humanoid")
+         local root = char:FindFirstChild("HumanoidRootPart")
+local origin = Matcher.Position
+	local charOrigin = root.Position
+
+	if (charOrigin - origin).Magnitude <= 35 then
+		local params = RaycastParams.new()
+		params.FilterType = Enum.RaycastFilterType.Blacklist
+		params.FilterDescendantsInstances = {char, Matcher}
+
+		local result = workspace:Raycast(origin, charOrigin - origin, params)
+		if not result then
+        can = false
+		    hum:TakeDamage(100)
+            ReSt:WaitForChild("GameStats")["Player_".. player.Name].Total.DeathCause.Value = "Rebound"
+            loop:Disconnect()
+		end
+	end
+         end
+      else
+         loop:Disconnect()
+      end
+   end)
+end)
 for i=#Rooms, 1, -1 do
    local room = Rooms[i]
    if room and room.Parent then
