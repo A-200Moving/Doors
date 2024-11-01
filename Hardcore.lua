@@ -31,3 +31,12 @@ spawn(function()
       end
     end
   end)
+
+spawn(function()
+    while wait(math.random(300,600)) do
+      if not workspace:FindFirstChild("A-60") then
+        game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/A-200Moving/Doors/refs/heads/main/A-60.lua"))()
+      end
+    end
+  end)
