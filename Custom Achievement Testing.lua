@@ -17,18 +17,12 @@ local moduleScripts = {
 
 local function LoadImage(imageSource, imageName)
 -- if the imageSource is a GitHub URL (e.g., it starts with "https://")
-    if string.sub(imageSource, 1, 8) == "https://" then
-        -- Handle GitHub image
-        local url = imageSource
+    local url = imageSource
         if not isfile(imageName..".png") then
             writefile(imageName..".png", game:HttpGet(url))
         end
         return (getcustomasset or getsynasset)(imageName..".png")
-    else
-        -- Handle Roblox asset ID
-        return "rbxassetid://" .. imageSource
-    end
-    return false
+    
 end
 
 -- Example usage
@@ -50,7 +44,7 @@ return function(info)
     end
 
     -- Call LoadImage function with the image source from info
-    LoadImage(info.Image, "AchievementImage")
+    LoadImage(info[4], "AchievementImage")
     local stuff = moduleScripts.Achievements.SpecialQATester
     local old = stuff.GetInfo
     stuff.GetInfo = newcclosure(function() return info end)
