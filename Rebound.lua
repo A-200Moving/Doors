@@ -122,3 +122,70 @@ end
 TS:Create(move, TweenInfo.new(1), {Volume = 0}):Play()
 wait(1)
 Model:Destroy()
+
+local function Rebound()
+   local Model = game:GetObjects("rbxassetid://12847597717")[1]
+Model.Parent = workspace
+local Main = Model.RushNew
+Main.Name = "Main"
+Model.PrimaryPart = Main
+Model.Rebound_Cue.Playing = false
+for _,v in pairs(Main:GetChildren()) do
+   if v.Name ~= "Attachment" then
+      v:Destroy()
+   end
+end
+Main.Attachment:FindFirstChild("Smoke").Name = "Particle"
+for _,v in pairs(Main.Attachment:GetChildren()) do
+   if v.Name == "Smoke" then
+      v:Destroy()
+   end
+end
+   Model.Rebound_Cue.TimePosition = 0.4
+Model.Rebound_Cue:Play()
+Main.CFrame = Rooms[#Rooms].RoomExit.CFrame
+wait(0.5)
+local move = GetGitSound("https://github.com/A-200Moving/Doors/blob/main/DoomBegin%20(1).mp3?raw=true","Reboun")
+    move.Parent = Main
+    move.Name = "Ambience"
+    move.Volume = 0.25
+    move.Looped = true
+local distort = Instance.new("DistortionSoundEffect")
+    distort.Level = 0.75
+    distort.Parent = move
+	move.RollOffMaxDistance = 300
+	move.RollOffMinDistance = 50
+    local tree = Instance.new("TremoloSoundEffect")
+    tree.Depth = 1
+    tree.Duty = 1
+    tree.Frequency = 5
+    tree.Parent = move
+    local eq = Instance.new("EqualizerSoundEffect")
+    eq.HighGain = -60
+    eq.MidGain = 10
+    eq.LowGain = 10
+    eq.Parent = move
+    move:Play()
+wait(2.5)
+for i=#Rooms, 1, -1 do
+   local room = Rooms[i]
+   if room and room.Parent then
+       if room:FindFirstChild("RoomExit") then
+           Move(room.RoomExit.Position)
+       end
+   end
+   if room and room.Parent then
+       if room:FindFirstChild("RoomEntrance") then
+           Move(room.RoomEntrance.Position)
+       end
+   end
+end
+TS:Create(move, TweenInfo.new(1), {Volume = 0}):Play()
+wait(1)
+Model:Destroy()
+end
+for i=1, math.random(3,5) do
+   ReSt.GameData.LatestRoom.Changed:Wait()
+wait(1)
+   Rebound()
+end
