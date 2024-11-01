@@ -3,6 +3,11 @@ local TS = game:GetService("TweenService")
 
 local can = true
 
+local Spawned = Instance.new("BoolValue")
+Spawned.Name = "Matcher"
+Spawned.Value = true
+Spawned.Parent = workspace
+
 local Module_Events = require(ReSt.ClientModules.Module_Events)
 
 local Matcher = game:GetObjects("rbxassetid://12445945135")[1]
@@ -90,6 +95,8 @@ end
 TS:Create(Matcher.Matcher, TweenInfo.new(1.5), {Volume = 0}):Play()
 wait(1.5)
 Entity:Destroy()
+
+Spawned:Destroy()
 
 if can then
    local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Achievements/Source.lua"))()
