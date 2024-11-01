@@ -62,6 +62,12 @@ function GetGitSound(GithubSnd,SoundName)
 	sound.SoundId=(getcustomasset or getsynasset)(SoundName..".mp3")
 	return sound
 end
+local function Move(target)
+   local dist = (Main.Position - target).Magnitude
+   local tween = TS:Create(Main, TweenInfo.new(dist / 80), {Position = target})
+   tween:Play()
+   tween.Completed:Wait()
+end
 wait(4)
 Model.Rebound_Cue.TimePosition = 0.4
 Model.Rebound_Cue:Play()
