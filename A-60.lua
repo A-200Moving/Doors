@@ -156,7 +156,7 @@ local function LoadImage(imageSource, imageName)
 end
 
 achievementGiver({
-    Title = "A LightSpeed Thing",
+    Title = "LightSpeed Thing",
     Desc = "Remember Me?",
     Reason = "Survive A-60.",
     Image = LoadImage("https://github.com/A-200Moving/Doors/blob/main/A-60secondandthirdface.png?raw=true","a60realfr")
